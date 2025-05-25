@@ -1,0 +1,20 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="create-container">
+    
+    <h1 class="create-hero">
+        <% if(locals.uname) { %>
+            Welcome<br><span style="color: royalblue;"><%= uname %></span>,<br>
+        <% } %>
+        Create your<br>AP Blogs.
+    </h1>
+    <form class="create-post-flex" action="/myPosts" method="POST">
+        <textarea class="textarea" type="text" name="blog" placeholder="Create your AP Blog"></textarea>
+        <input class="submit" type="submit" value="Post">
+    </form>
+</div>
+
+
+
+
+<%- include("./partials/footer.ejs") %>

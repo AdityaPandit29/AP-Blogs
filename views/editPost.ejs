@@ -1,0 +1,22 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="container">
+    <div class="post-flex">
+        <% if(locals.blog) {%>
+                <div class="post">
+                    <form class="create-post-flex" action="/myPosts" method="POST">
+                        <textarea class="textarea" type="text" name="blog"><%= blog %></textarea>
+                        <input class="submit" type="submit" value="Post">
+                    </form>
+                </div>
+                
+        <% } 
+                
+        
+        else { %>
+            <h1>You have not posted yet.</h1>
+        <% } %>   
+    </div>
+</div>
+
+<%- include("./partials/footer.ejs") %>

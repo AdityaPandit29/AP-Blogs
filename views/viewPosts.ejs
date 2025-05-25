@@ -1,0 +1,46 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="container">
+    <div class="post-flex">
+        <% if(locals.blogs && locals.blogs.length !== 0) { 
+            for(let i = blogs.length - 1; i >= 0; i--) { %>
+                <div class="post">
+                    <div class="post-header">
+                        <p class="post-time"><%= time[i] %>
+                        <div class="post-icons-container">
+                            <form action="/editPost" method="POST">
+                                <input type="hidden" name="index" value="<%= i %>">
+                                <button type="submit" class="post-icon-button">
+                                    <img class="post-icon" src="assets/svgs/edit.svg" alt="edit">
+                                </button>
+                            </form>
+                            
+                            <form action="/deletePost" method="POST" onsubmit="return confirmDelete();">
+                                <input type="hidden" name="index" value="<%= i %>">
+                                <button type="submit" class="post-icon-button">
+                                    <img class="post-icon" src="assets/svgs/delete.svg" alt="delete">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <p class="post-text"><%= blogs[i] %></p>
+                </div>
+                
+            <% } 
+                
+        }
+        else { %>
+            <h1>You have not posted yet.</h1>
+        <% } %>   
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this post?");
+    }
+</script>
+
+
+<%- include("./partials/footer.ejs") %>
