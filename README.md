@@ -1,3 +1,8 @@
+How to run?
+Use command - $ npm install
+Use command - $ node index.js
+
+
 AP Blogs
 
 Welcome to **AP Blogs** — a minimal and powerful blogging platform built with Node.js, Express, and EJS. It lets users create, view, and manage blog posts effortlessly in a clean, user-friendly interface.
