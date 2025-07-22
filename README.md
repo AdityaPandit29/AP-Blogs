@@ -1,6 +1,6 @@
-How to run?
-Use command - $ npm install 
-Use command - $ node index.js 
+How to run?  
+Use command - $ npm install  
+Use command - $ node index.js  
 
 
 AP Blogs
