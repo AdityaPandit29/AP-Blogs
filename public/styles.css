@@ -361,7 +361,7 @@ footer {
     .nav-bar-flex {
         flex-direction: column;
         height: 80px;
-        padding: 10px;
+        padding: 10px 0px;
         gap: 10px;
     }
 
