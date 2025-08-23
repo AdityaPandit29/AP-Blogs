@@ -4,9 +4,9 @@
     
     <h1 class="create-hero">
         <% if(locals.uname) { %>
-            Welcome<br><span style="color: royalblue;"><%= uname %></span>,<br>
+            Welcome <span class="name"><span style="color: royalblue;"><%= uname %></span>,</span>
         <% } %>
-        Create your<br>AP Blogs.
+        <span style="display: block;">Create your <span class="ap-blogs">AP Blogs.</span></span>
     </h1>
     <form class="create-post-flex" action="/myPosts" method="POST">
         <textarea class="textarea" type="text" name="blog" placeholder="Create your AP Blog"></textarea>

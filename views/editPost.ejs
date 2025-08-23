@@ -4,8 +4,8 @@
     <div class="post-flex">
         <% if(locals.blog) {%>
                 <div class="post">
-                    <form class="create-post-flex" action="/myPosts" method="POST">
-                        <textarea class="textarea" type="text" name="blog"><%= blog %></textarea>
+                    <form class="edit-post-flex" action="/myPosts" method="POST">
+                        <textarea class="edit-textarea" type="text" name="blog"><%= blog %></textarea>
                         <input class="submit" type="submit" value="Post">
                     </form>
                 </div>
