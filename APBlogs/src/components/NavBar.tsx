@@ -4,13 +4,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
+import { useLocation } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,7 +56,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ButtonAppBar() {
-const [auth] = React.useState(true);
+  const location = useLocation();
+
+  const isHomePage = location.pathname === '/';
+  
+  const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -69,15 +74,6 @@ const [auth] = React.useState(true);
     <Box sx={{ flexGrow: 1, paddingTop: '64px'}}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -90,23 +86,27 @@ const [auth] = React.useState(true);
             }}
           >
             <a
-              href="#app-bar-with-responsive-menu"
+              href="/"
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               AP Blogs
             </a>
           </Typography>
 
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Username"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          {auth && (
+          {!isHomePage && (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Username"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+          )}
+          
+          
+          {!isHomePage && auth ? (
             <div>
               <IconButton
                 size="small"
@@ -137,7 +137,15 @@ const [auth] = React.useState(true);
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
-          )}
+          ) : 
+          (<Button
+            color="inherit"
+            sx={{ ml: 2, borderRadius: 2, textTransform: 'none', fontWeight: 'medium' }}
+            href="/login"
+          >
+            Sign In
+          </Button>)}
+
 
         </Toolbar>
       </AppBar>

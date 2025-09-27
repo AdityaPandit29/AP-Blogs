@@ -8,12 +8,9 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import type { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Avatar } from '@mui/material';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
