@@ -1,8 +1,10 @@
 // import { useState } from 'react'
-import NavBar from './NavBar.tsx'
+import HomePage from './HomePage.tsx'
 
 function App() {
-  return <NavBar />
+  return <div>
+    <HomePage />
+  </div>
 }
 
 export default App

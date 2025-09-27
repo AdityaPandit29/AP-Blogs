@@ -66,8 +66,8 @@ const [auth] = React.useState(true);
     setAnchorEl(null);
   };
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1, paddingTop: '64px'}}>
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             size="large"
@@ -78,29 +78,45 @@ const [auth] = React.useState(true);
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            AP Blogs
+          <Typography
+            variant="h6"
+            noWrap
+            sx={{
+              mr: 2,
+              display: { xs: 'none', sm: 'flex' },
+              fontFamily: 'monospace',
+              color: 'inherit',
+              flexGrow: 1,
+            }}
+          >
+            <a
+              href="#app-bar-with-responsive-menu"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              AP Blogs
+            </a>
           </Typography>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Username"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
           {auth && (
             <div>
               <IconButton
-                size="large"
+                size="small"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircle fontSize='large'/>
               </IconButton>
               <Menu
                 id="menu-appbar"
