@@ -51,7 +51,7 @@ export default function BasicButtons() {
             zIndex: 1300,
           }}
         >
-          <Button variant="outlined" sx={{ borderRadius: '20px' }}>
+          <Button variant="contained" sx={{ borderRadius: '20px' }}>
             <AddIcon /> New Post
           </Button>
         </Stack>

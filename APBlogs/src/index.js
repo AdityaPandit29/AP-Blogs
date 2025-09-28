@@ -18,18 +18,24 @@ app.use(cors()); // CORS (Cross-Origin Resource Sharing) is a security feature i
 app.use(express.json()); // parse the json body into object
 app.use(express.urlencoded({ extended: true }));
 
+
 app.post("/api/register", async (req, res) => {
   const { username, pass, nickname } = req.body;
   try {
+    const result = await db.query(
+      "SELECT COUNT(*) FROM USERS"
+    );
+    const user_id = parseInt(result.rows[0].count) + 1;
+    
     // You can validate inputs here (e.g., uniqueness, etc.)
     await db.query(
-      "INSERT INTO users (username, pass, nickname) VALUES ($1, $2, $3)",
-      [username, pass, nickname]
+      "INSERT INTO users VALUES ($1, $2, $3, $4)",
+      [user_id, username, pass, nickname]
     );
     res.status(201).json({ message: "User registered successfully!" });
   } catch (err) {
-    console.log(err);
     if (err.code === "23505") { // Unique violation
+      console.log("Username already exists.");
       return res.status(409).json({ message: "Username already exists." });
     }
     res.status(500).json({ message: "Error registering user", error: err });
@@ -61,6 +67,9 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+
+// app.get("/api/profile")
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

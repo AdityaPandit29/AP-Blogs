@@ -37,7 +37,7 @@ export default function LoginForm() {
         setError(data.message);
       }
       else {
-        navigate('/profile');
+        navigate(`/profile/${form.username}`);
       }
 
 
