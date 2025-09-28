@@ -13,7 +13,6 @@ export default function RegisterForm() {
   const [isRegistered, setRegistered] = useState(false);
   const [form, setForm] = useState({ username: '', nickname: '', password: '', confirmPassword: '' });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,7 +21,6 @@ export default function RegisterForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
-    setSuccess('');
     if (form.password.length < 8) {
       setError('Password must be at least 8 characters.');
       return;
@@ -42,11 +40,9 @@ export default function RegisterForm() {
         }),
       });
       const data = await res.json(); // converts the response sent to a JS object
-      console.log(res);
       if (!res.ok) {
         setError(data.message);
       } else {
-        // setSuccess(data.message);
         setRegistered(true);
       }
     } catch (err) {
@@ -93,6 +89,7 @@ export default function RegisterForm() {
           margin="normal"
           required
           autoFocus
+          autoComplete='off'
         />
         <TextField
           label="Nickname"
@@ -103,6 +100,7 @@ export default function RegisterForm() {
           fullWidth
           margin="normal"
           required
+          autoComplete='off'
         />
         <TextField
           label="Password"
@@ -140,12 +138,6 @@ export default function RegisterForm() {
         {error && (
           <Typography color="error" sx={{ mt: 1, fontWeight: 'medium' }}>
             {error}
-          </Typography>
-        )}
-
-        {success && (
-          <Typography color="success" sx={{ mt: 1, fontWeight: 'medium' }}>
-            {success}
           </Typography>
         )}
 

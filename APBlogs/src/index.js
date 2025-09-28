@@ -36,6 +36,32 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
+
+app.post("/api/login", async (req, res) => {
+  const { username, pass } = req.body;
+  try {
+    // You can validate inputs here (e.g., uniqueness, etc.)
+    const result = await db.query(
+      "SELECT * FROM USERS WHERE username = $1",
+      [username]
+    );
+
+    if(result.rowCount === 0) {
+      return res.status(404).json({ message : "Username does not exist." });
+    }
+
+    if(pass !== result.rows[0].pass) {
+      return res.status(401).json({ message : "Incorrect password." });
+    }
+
+    res.status(200).json({ message : "Login successful." });
+    
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
