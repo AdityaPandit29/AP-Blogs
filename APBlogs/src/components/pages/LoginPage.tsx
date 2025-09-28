@@ -14,7 +14,7 @@ export default function LoginForm() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#545454ff',
         p: 2,
       }}
     >
