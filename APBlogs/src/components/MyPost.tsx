@@ -40,7 +40,31 @@ const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => {
 }));
 
 export default function MyPost({post} : MyPostProps) {
-  console.log(post);
+
+    const updatedTime = new Date(post.updated_at).toString().slice(16, 21);
+    console.log(updatedTime);
+
+  function getUpdatedDateOrTime() {
+    const curDate = new Date().toString().slice(4, 15);
+    const updatedDate = new Date(post.updated_at).toString().slice(4, 15);
+    const updatedTime = new Date(post.updated_at);
+
+    if(curDate === updatedDate) {
+      let hours = updatedTime.getHours();
+      const minutes = updatedTime.getMinutes().toString().padStart(2, '0');
+      let timeMarker = 'am';
+
+      if(hours >= 12) timeMarker = "pm"
+      hours = hours % 12;
+      if(hours === 0 || hours === 12) hours = 12;
+
+      return `${hours.toString().padStart(2, '0')}:${minutes} ${timeMarker}`;
+    }
+
+    return updatedDate;
+  }
+  
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -65,10 +89,14 @@ export default function MyPost({post} : MyPostProps) {
           </>
         }
         title={post.title}
-        subheader={post.updated_at}
+        subheader={
+          <Typography variant="body2" fontSize="14px" color="text.secondary">
+            {getUpdatedDateOrTime()}
+          </Typography>
+        }
       />
       <CardContent sx={{ pb: 0 }}>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'bold'}}>
           {post.description}
         </Typography>
       </CardContent>
@@ -84,7 +112,7 @@ export default function MyPost({post} : MyPostProps) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0 }}>
-          <Typography sx={{ marginBottom: 2, fontWeight: 'bold' }}>
+          <Typography sx={{ marginBottom: 2 }}>
             {post.content}
           </Typography>
         </CardContent>

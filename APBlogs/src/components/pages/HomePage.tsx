@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import NavBar from '../NavBar.tsx'
 
-export default function LandingPage() {
+
+export default function HomePage() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       {/* Navbar */}

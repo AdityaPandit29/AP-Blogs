@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import CreatePostPage from './pages/CreatePostPage.tsx' 
+import { UserProvider, useUser } from './UserContext.tsx';
 
 function App() {
   interface Post {

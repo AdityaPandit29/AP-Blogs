@@ -142,6 +142,17 @@ app.post('/api/create', async (req, res) => {
 });
 
 
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ message: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid'); // clear session cookie (default cookie name)
+    res.json({ message: 'Logout successful' });
+  });
+});
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

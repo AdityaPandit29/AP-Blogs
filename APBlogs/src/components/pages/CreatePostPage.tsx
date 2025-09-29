@@ -152,7 +152,7 @@ export default function CreatePostPage({ setUser } : CreatePostPageProps) {
             type="submit"
             sx={{ py: 1.5, fontWeight: 'bold', fontSize: '1.1rem', borderRadius: 3 }}
           >
-            Submit Post
+            Create
           </Button>
           <Button
               variant="outlined"
