@@ -9,7 +9,7 @@ interface Post {
   title: string;
   description?: string; // ? means optional
   content: string;
-  updatedAt: string;
+  updated_at: string;
 }
 
 interface ProfilePageProps {
@@ -20,7 +20,7 @@ interface ProfilePageProps {
 }
 
 export default function ProfilePage({ username, nickname, avatarUrl, posts }: ProfilePageProps) {
-  // console.log(posts[0].id);
+  
   return (
     <div>
     <NavBar />

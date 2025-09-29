@@ -6,25 +6,29 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography} from '@mui/material';
 import ProfilePage from './ProfilePage.tsx';
 
-export default function LoginForm() {
-  interface Post {
-    id: string;
-    title: string;
-    description?: string; // ? means optional
-    content: string;
-    updatedAt: string;
-  }
-  interface UserType {
-    username: string;
-    nickname: string;
-    avatarUrl?: string;
-    posts: Post[];
-  }
-  // const navigate = useNavigate();
+interface LoginPageProps {
+  setUser: (user: any) => void;
+}
+
+export default function LoginForm({ setUser } : LoginPageProps) {
+  // interface Post {
+  //   id: string;
+  //   title: string;
+  //   description?: string; // ? means optional
+  //   content: string;
+  //   updatedAt: string;
+  // }
+  // interface UserType {
+  //   username: string;
+  //   nickname: string;
+  //   avatarUrl?: string;
+  //   posts: Post[];
+  // }
+  const navigate = useNavigate();
   const [form, setForm] = useState({username : '', password : ''});
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [user, setUser] = useState<UserType | null>(null);
+  // const [success, setSuccess] = useState(false);
+  // const [user, setUser] = useState<UserType | null>(null);
 
   function handleChange(e) {
     setForm({...form, [e.target.name] : e.target.value});
@@ -33,12 +37,13 @@ export default function LoginForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
-    setSuccess(false);
+    // setSuccess(false);
     
     try {
       const res = await fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           username: form.username,
           pass: form.password,
@@ -52,11 +57,19 @@ export default function LoginForm() {
         setError(data.message);
       }
       else {
-        setSuccess(true);
-        setUser(data);
+        // After successful login, fetch profile to get user data
+        const profileRes = await fetch('http://localhost:3000/api/profile', {
+          credentials: 'include'
+        });
+
+        if (profileRes.ok) {
+          const userData = await profileRes.json();
+          setUser(userData); // Set user in App state
+          navigate('/profile');
+        } else {
+          setError('Failed to load profile');
+        }
       }
-
-
     } catch (err) {
       setError('Unexpected error occured.');
     }
@@ -64,7 +77,6 @@ export default function LoginForm() {
   }   
 
   return (
-    !success ? 
     <form onSubmit={handleSubmit}>
     <Box
       sx={{
@@ -141,9 +153,5 @@ export default function LoginForm() {
       </Paper>
     </Box>
     </form>
-
-    :
-
-    <ProfilePage {...user}/>
   );
 }

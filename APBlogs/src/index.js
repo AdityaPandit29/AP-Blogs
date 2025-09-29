@@ -1,11 +1,10 @@
 import express from "express";
 import pg from "pg";
 import cors from 'cors';
+import session from 'express-session';
 
 const app = express();
 const port = 3000;
-const router = express.Router();
-
 
 const db = new pg.Client({
   user: "postgres",
@@ -16,17 +15,15 @@ const db = new pg.Client({
 });
 db.connect();
 
-app.use(cors()); // CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to control how web applications running on one origin (domain, protocol, or port) can access resources from a different origin.
+app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to control how web applications running on one origin (domain, protocol, or port) can access resources from a different origin.
 app.use(express.json()); // parse the json body into object
 app.use(express.urlencoded({ extended: true }));
-
-function isAuthenticated(req, res, next) { // Middleware for authentication (example)
-  if (req.session && req.session.user) {
-    return next();
-  }
-  res.status(401).json({ error: 'Not authenticated' });
-}
-
+app.use(session({
+  secret: 'your-secret-key',  // used to sign(encrypt) session cookie
+  resave: false,              // avoid resaving session if unmodified
+  saveUninitialized: false,   // don't save empty sessions
+  cookie: { secure: false }   // true if using HTTPS and false if using HTTP
+}));
 
 app.post("/api/register", async (req, res) => {
   const { username, pass, nickname } = req.body;
@@ -72,17 +69,26 @@ app.post("/api/login", async (req, res) => {
     const user_id = result.rows[0].user_id;
     const nickname = result.rows[0].nickname;
 
+
     const posts = (await db.query(
-      "SELECT * FROM BLOGS WHERE user_id = $1", [user_id]
+      "SELECT * FROM BLOGS WHERE user_id = $1 ORDER BY updated_at DESC", [user_id]
     )).rows;
 
-    console.log(posts);
+    req.session.user = {
+      username: username,
+      nickname: nickname,
+      posts: posts
+      // any additional info you want to keep
+    };
 
-    res.status(200).json({ 
-      username : username,
-      nickname : nickname,
-      posts : posts
-    });
+    // res.status(200).json({ 
+    //   username : username,
+    //   nickname : nickname,
+    //   posts : posts
+    // });
+    // console.log(req.session.user);
+
+    res.status(200).json({ message : "Login successful" });
     
   } catch (err) {
     console.log(err);
@@ -91,29 +97,13 @@ app.post("/api/login", async (req, res) => {
 });
 
 
-
-// router.get('/api/profile', isAuthenticated, async (req, res) => {
-//   try {
-//     // Get user info from session
-//     const username = req.session.user.username;
-
-//     // Query database for user info and posts
-//     // Example: assuming SQL and a "users" table and "blogs" table
-//     const user = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-//     const posts = await db.query('SELECT * FROM blogs WHERE user_id = ?', [user.user_id]);
-
-//     res.json({
-//       username: user.username,
-//       nickname: user.nickname,
-//       avatarUrl: user.avatarUrl,
-//       posts: posts
-//     });
-//   } catch (err) {
-//     res.status(500).json({ error: 'Error loading profile.' });
-//   }
-// });
-
-// module.exports = router;
+app.get('/api/profile', (req, res) => {
+  if (req.session && req.session.user) {
+    res.json(req.session.user);
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
+  }
+});
 
 
 app.listen(port, () => {

@@ -50,7 +50,6 @@ export default function MyPost({post} : MyPostProps) {
   return (
     <Card
       sx={{
-        // width: {md: '50%', sm: '75%', xs: '90%'},
         margin: '20px auto',
       }}
     >

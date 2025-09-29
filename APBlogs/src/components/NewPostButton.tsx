@@ -19,6 +19,7 @@ export default function BasicButtons() {
             bottom: '24px',
             right: '24px',
             zIndex: 1300,
+            
           }}
         >
           <Button
@@ -35,6 +36,7 @@ export default function BasicButtons() {
               justifyContent: 'center',
             }}
             aria-label="Add"
+            href='/create'
           >
             <AddIcon />
           </Button>
@@ -51,8 +53,8 @@ export default function BasicButtons() {
             zIndex: 1300,
           }}
         >
-          <Button variant="contained" sx={{ borderRadius: '20px' }}>
-            <AddIcon /> New Post
+          <Button variant="contained" sx={{ borderRadius: '20px' }} href='/create'>
+            <AddIcon /> New Blog
           </Button>
         </Stack>
       )}
