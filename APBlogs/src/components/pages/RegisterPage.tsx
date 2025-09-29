@@ -112,6 +112,7 @@ export default function RegisterForm() {
           fullWidth
           margin="normal"
           required
+          autoComplete='off'
           helperText="Must be at least 8 characters."
         />
         <TextField
@@ -123,7 +124,9 @@ export default function RegisterForm() {
           variant="outlined"
           fullWidth
           margin="normal"
+          autoComplete='off'
           required
+          
         />
         <Button
           variant="contained"

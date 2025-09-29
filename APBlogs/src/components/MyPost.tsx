@@ -21,7 +21,7 @@ interface Post {
   title: string;
   description?: string; // ? means optional
   content: string;
-  updatedAt: string;
+  updated_at: string;
 }
 
 interface MyPostProps {
@@ -66,7 +66,7 @@ export default function MyPost({post} : MyPostProps) {
           </>
         }
         title={post.title}
-        subheader={post.updatedAt}
+        subheader={post.updated_at}
       />
       <CardContent sx={{ pb: 0 }}>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>

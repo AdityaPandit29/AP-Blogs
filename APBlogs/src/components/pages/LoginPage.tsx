@@ -1,16 +1,30 @@
 import { useState } from 'react';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
+import { Box, Paper, Typography} from '@mui/material';
+import ProfilePage from './ProfilePage.tsx';
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+  interface Post {
+    id: string;
+    title: string;
+    description?: string; // ? means optional
+    content: string;
+    updatedAt: string;
+  }
+  interface UserType {
+    username: string;
+    nickname: string;
+    avatarUrl?: string;
+    posts: Post[];
+  }
+  // const navigate = useNavigate();
   const [form, setForm] = useState({username : '', password : ''});
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [user, setUser] = useState<UserType | null>(null);
 
   function handleChange(e) {
     setForm({...form, [e.target.name] : e.target.value});
@@ -19,6 +33,7 @@ export default function LoginForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
+    setSuccess(false);
     
     try {
       const res = await fetch('http://localhost:3000/api/login', {
@@ -37,7 +52,8 @@ export default function LoginForm() {
         setError(data.message);
       }
       else {
-        navigate(`/profile/${form.username}`);
+        setSuccess(true);
+        setUser(data);
       }
 
 
@@ -48,6 +64,7 @@ export default function LoginForm() {
   }   
 
   return (
+    !success ? 
     <form onSubmit={handleSubmit}>
     <Box
       sx={{
@@ -97,6 +114,7 @@ export default function LoginForm() {
           fullWidth
           margin="normal"
           required
+          autoComplete='off'
         />
         <Button
           variant="contained"
@@ -123,5 +141,9 @@ export default function LoginForm() {
       </Paper>
     </Box>
     </form>
+
+    :
+
+    <ProfilePage {...user}/>
   );
 }

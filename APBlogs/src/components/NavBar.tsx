@@ -12,6 +12,10 @@ import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
 import { useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,6 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ButtonAppBar() {
+  const navigate = useNavigate();
   const location = useLocation();
 
   const isHomePage = location.pathname === '/';
@@ -93,7 +98,7 @@ export default function ButtonAppBar() {
             </a>
           </Typography>
 
-          {!isHomePage && (
+          {/* {!isHomePage && (
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -103,7 +108,7 @@ export default function ButtonAppBar() {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-          )}
+          )} */}
           
           
           {!isHomePage && auth ? (
@@ -134,7 +139,7 @@ export default function ButtonAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose} component={Link} to="/">Sign Out</MenuItem>
               </Menu>
             </div>
           ) : 

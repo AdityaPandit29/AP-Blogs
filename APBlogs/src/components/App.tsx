@@ -6,22 +6,35 @@ import RegisterPage from './pages/RegisterPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 
 function App() {
-  const [user, setUser] = useState(null);  // Will hold user info & posts
+  // interface Post {
+  //   id: string;
+  //   title: string;
+  //   description?: string; // ? means optional
+  //   content: string;
+  //   updatedAt: string;
+  // }
+  // interface UserType {
+  //   username: string;
+  //   nickname: string;
+  //   avatarUrl?: string;
+  //   posts: Post[];
+  // }
+  // const [user, setUser] = useState<UserType | null>(null);  // Will hold user info & posts
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data);  // e.g. { username, nickname, avatarUrl, posts }
-        }
-      } catch (err) {
-        console.error('Error fetching profile', err);
-      }
-    }
-    fetchProfile();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchProfile() {
+  //     try {
+  //       const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
+  //       if (res.ok) {
+  //         const data = await res.json();
+  //         setUser(data);  // e.g. { username, nickname, avatarUrl, posts }
+  //       }
+  //     } catch (err) {
+  //       console.error('Error fetching profile', err);
+  //     }
+  //   }
+  //   fetchProfile();
+  // }, []);
 
   return (
     <Router>
@@ -29,8 +42,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        {/* <Route path="/profile/:username" element={user ? <ProfilePage {...user} /> : <LoginPage />} /> */}
-        <Route path="/profile" element={<ProfilePage 
+        {/* <Route path="/profile" element={user ? <ProfilePage {...user} /> : <LoginPage />} /> */}
+        {/* <Route path="/profile" element={<ProfilePage 
             username= "adityapandit29"
             nickname= "Aditya"
             posts= {[{
@@ -40,7 +53,7 @@ function App() {
               updatedAt:"Today",
               description:"First Blog description"
             }]}
-        />} />
+        />} /> */}
       </Routes>
     </Router>
   );
