@@ -4,31 +4,15 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography} from '@mui/material';
-import ProfilePage from './ProfilePage.tsx';
 
 interface LoginPageProps {
   setUser: (user: any) => void;
 }
 
 export default function LoginForm({ setUser } : LoginPageProps) {
-  // interface Post {
-  //   id: string;
-  //   title: string;
-  //   description?: string; // ? means optional
-  //   content: string;
-  //   updatedAt: string;
-  // }
-  // interface UserType {
-  //   username: string;
-  //   nickname: string;
-  //   avatarUrl?: string;
-  //   posts: Post[];
-  // }
   const navigate = useNavigate();
   const [form, setForm] = useState({username : '', password : ''});
   const [error, setError] = useState('');
-  // const [success, setSuccess] = useState(false);
-  // const [user, setUser] = useState<UserType | null>(null);
 
   function handleChange(e) {
     setForm({...form, [e.target.name] : e.target.value});

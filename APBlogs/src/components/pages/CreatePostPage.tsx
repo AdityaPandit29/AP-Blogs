@@ -11,7 +11,7 @@ export default function CreatePostPage() {
     content: ''
   });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,7 +20,7 @@ export default function CreatePostPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
-    setSuccess(false);
+    // setSuccess(false);
 
     if (!form.title || !form.content) {
       setError('Title and Content are required.');
@@ -39,8 +39,10 @@ export default function CreatePostPage() {
         }),
       });
 
+      const data = await res.json();
+
       if(!res.ok) {
-        setError('Failed to create your blog.');
+        setError(data.message);
         return;
       }
 
@@ -50,7 +52,7 @@ export default function CreatePostPage() {
       setError('Unexpected error occurred.');
     }
 
-    setSuccess(true);
+    // setSuccess(true);
   }
 
   return (
@@ -125,11 +127,11 @@ export default function CreatePostPage() {
             </Typography>
           )}
 
-          {success && (
+          {/* {success && (
             <Typography color="success.main" sx={{ fontWeight: 'medium', textAlign: 'center' }}>
               Post created successfully!
             </Typography>
-          )}
+          )} */}
 
           <Button
             variant="contained"

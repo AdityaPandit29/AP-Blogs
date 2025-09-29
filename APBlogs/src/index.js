@@ -75,18 +75,9 @@ app.post("/api/login", async (req, res) => {
     )).rows;
 
     req.session.user = {
-      username: username,
-      nickname: nickname,
-      posts: posts
+      user_id: user_id,
       // any additional info you want to keep
     };
-
-    // res.status(200).json({ 
-    //   username : username,
-    //   nickname : nickname,
-    //   posts : posts
-    // });
-    // console.log(req.session.user);
 
     res.status(200).json({ message : "Login successful" });
     
@@ -97,9 +88,29 @@ app.post("/api/login", async (req, res) => {
 });
 
 
-app.get('/api/profile', (req, res) => {
+app.get('/api/profile', async (req, res) => {
   if (req.session && req.session.user) {
-    res.json(req.session.user);
+    const user_id = req.session.user.user_id;
+
+    const {username, nickname} = (await db.query(
+      "SELECT username, nickname FROM USERS WHERE user_id = $1", [user_id]
+    )).rows[0];
+
+    const posts = (await db.query(
+      "SELECT * FROM BLOGS WHERE user_id = $1 ORDER BY updated_at DESC", [user_id]
+    )).rows;
+
+    res.json({username: username, nickname: nickname, posts: posts});
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
+  }
+});
+
+
+app.post('/api/create', async (req, res) => {
+  console.log(req.session);
+  if (req.session && req.session.user) {
+
   } else {
     res.status(401).json({ message: 'Not authenticated' });
   }
