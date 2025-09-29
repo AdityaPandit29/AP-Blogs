@@ -43,7 +43,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/create" element={<CreatePostPage />} />
+        <Route path="/create" element={<CreatePostPage setUser={setUser} />} />
         <Route path="/profile" element={user ? <ProfilePage {...user} /> : <LoginPage  setUser={setUser} />} />
       </Routes>
     </Router>

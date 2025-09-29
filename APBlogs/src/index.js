@@ -108,13 +108,39 @@ app.get('/api/profile', async (req, res) => {
 
 
 app.post('/api/create', async (req, res) => {
-  console.log(req.session);
+  console.log(req.session.user);
+  
   if (req.session && req.session.user) {
-
+    const { title, description, content } = req.body;
+    const user_id = req.session.user.user_id;
+    
+    try {
+      // Validate required fields
+      if (!title || !content) {
+        return res.status(400).json({ message: 'Title and content are required.' });
+      }
+      
+      
+      // Insert new blog post
+      await db.query(
+        "INSERT INTO BLOGS (user_id, title, description, content, created_at, updated_at) VALUES ($1, $2, $3, $4, NOW(), NOW())",
+        [user_id, title, description || null, content]
+      );
+      
+      res.status(201).json({ 
+        message: 'Blog post created successfully!',
+        // blog_id: blog_id
+      });
+      
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error creating blog post' });
+    }
   } else {
     res.status(401).json({ message: 'Not authenticated' });
   }
 });
+
 
 
 app.listen(port, () => {

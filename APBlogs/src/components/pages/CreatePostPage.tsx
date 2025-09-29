@@ -3,7 +3,11 @@ import NavBar from '../NavBar.tsx';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreatePostPage() {
+interface CreatePostPageProps {
+  setUser: (user: any) => void;
+}
+
+export default function CreatePostPage({ setUser } : CreatePostPageProps) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: '',
@@ -46,6 +50,15 @@ export default function CreatePostPage() {
         return;
       }
 
+      try {
+        const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);  // e.g. { username, nickname, avatarUrl, posts }
+        }
+      } catch (err) {
+        console.error('Error fetching profile', err);
+      }
       navigate('/profile');
 
     } catch (err) {

@@ -52,7 +52,7 @@ export default function ProfilePage({ username, nickname, avatarUrl, posts }: Pr
 
         {/* Posts section */}
         <Typography variant="h5" fontWeight="medium" sx={{ mb: 2 }}>
-          Your Posts ({posts.length})
+          Your Blogs ({posts.length})
         </Typography>
 
         {posts.length === 0 ? (
