@@ -133,7 +133,7 @@ export default function LoginForm({setUser} : LoginPageProps) {
 
         <Typography sx={{ mt: 2 }}>
           Don't have an account?{' '}
-          <Links component={Link} to="/login" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
+          <Links component={Link} to="/register" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
             Register
           </Links>
         </Typography>
