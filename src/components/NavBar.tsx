@@ -162,7 +162,7 @@ export default function ButtonAppBar({setUser} : ButtonAppBarProps) {
           (<Button
             color="inherit"
             sx={{ ml: 2, borderRadius: 2, textTransform: 'none', fontWeight: 'medium' }}
-            component={Link} to="/"
+            component={Link} to="/login"
           >
             Sign In
           </Button>)}
