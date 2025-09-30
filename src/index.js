@@ -13,7 +13,7 @@ const db = new pg.Client({
 
 // const db = new pg.Client({ user: "postgres", host: "localhost", database: "apblogs", password: "adipan123", port: 5432, });
 
-db.connect();
+db.connect()
   .then(() => console.log("Connected to Render Postgres"))
   .catch(err => console.error("DB connection error:", err));
 
