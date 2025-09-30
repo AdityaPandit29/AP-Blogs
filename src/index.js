@@ -29,7 +29,7 @@ app.use(session({
   secret: 'your-secret-key',  // used to sign(encrypt) session cookie
   resave: false,              // avoid resaving session if unmodified
   saveUninitialized: false,   // don't save empty sessions
-  cookie: { secure: true, sameSite: "none" }   // true if using HTTPS and false if using HTTP
+  cookie: { secure: true }   // true if using HTTPS and false if using HTTP
 }));
 
 app.post("/api/register", async (req, res) => {
