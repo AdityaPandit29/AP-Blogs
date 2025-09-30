@@ -49,7 +49,7 @@ export default function HomePage({setUser} : HomePageProps) {
           Welcome to AP Blogs
         </Typography>
         <Typography variant="h6" sx={{ maxWidth: 600, mb: 4, color: 'white' }}>
-          Discover engaging articles, tutorials, and insights from our vibrant tech community.
+          A private space to capture your thoughts, ideas, and code. Your personal journal for growth and creativity, just for you.
         </Typography>
         <Button variant="contained" size="large" component={Link} to="/login" sx={{ borderRadius: 3 }}>
           Get Started
