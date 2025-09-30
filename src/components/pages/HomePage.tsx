@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import NavBar from '../NavBar.tsx'
+import { Link } from "react-router-dom";
 
 interface HomePageProps {
   setUser: (user: any) => void;
@@ -50,7 +51,7 @@ export default function HomePage({setUser} : HomePageProps) {
         <Typography variant="h6" sx={{ maxWidth: 600, mb: 4, color: 'white' }}>
           Discover engaging articles, tutorials, and insights from our vibrant tech community.
         </Typography>
-        <Button variant="contained" size="large" href="/login" sx={{ borderRadius: 3 }}>
+        <Button variant="contained" size="large" component={Link} to="/login" sx={{ borderRadius: 3 }}>
           Get Started
         </Button>
       </Box>
