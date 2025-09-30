@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -40,9 +42,49 @@ const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => {
 }));
 
 export default function MyPost({post} : MyPostProps) {
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
-    const updatedTime = new Date(post.updated_at).toString().slice(16, 21);
-    console.log(updatedTime);
+  function handleEdit() {
+    navigate('/edit', { state: { post } });
+  }
+
+  async function handleDelete() {
+    const confirmDelete = await confirm('Are you sure you want to delete this blog?');
+
+    if(!confirmDelete) return;
+
+    setError('');
+    try {
+      const res = await fetch('http://localhost:3000/api/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            postId: post.id,
+          }),
+        });
+
+      const data = await res.json();
+
+      if(!res.ok) {
+        setError(data.message);
+        return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
+        if (res.ok) {
+          const data = await res.json();
+          // setUser(data);
+        }
+      } catch (err) {
+        console.error('Error fetching profile', err);
+      }
+    } catch (err) {
+      setError('Unexpected error occurred.');
+    }
+  }
 
   function getUpdatedDateOrTime() {
     const curDate = new Date().toString().slice(4, 15);
@@ -80,10 +122,10 @@ export default function MyPost({post} : MyPostProps) {
       <CardHeader
         action={
           <>
-            <IconButton aria-label="edit">
+            <IconButton aria-label="edit" onClick={handleEdit}>
                 <EditIcon />
             </IconButton>
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={handleDelete}>
                 <DeleteIcon />
             </IconButton>
           </>

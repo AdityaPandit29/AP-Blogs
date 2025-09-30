@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import CreatePostPage from './pages/CreatePostPage.tsx' 
+import EditPostPage from './pages/EditPostPage.tsx';
 import { UserProvider, useUser } from './UserContext.tsx';
 
 function App() {
@@ -44,7 +45,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/create" element={<CreatePostPage setUser={setUser} />} />
+        <Route path="/create" element={user ? <CreatePostPage setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
+        <Route path="/edit" element={user ? <EditPostPage setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
         <Route path="/profile" element={user ? <ProfilePage {...user} /> : <LoginPage  setUser={setUser} />} />
       </Routes>
     </Router>

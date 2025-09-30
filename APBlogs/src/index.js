@@ -108,7 +108,6 @@ app.get('/api/profile', async (req, res) => {
 
 
 app.post('/api/create', async (req, res) => {
-  console.log(req.session.user);
   
   if (req.session && req.session.user) {
     const { title, description, content } = req.body;
@@ -142,16 +141,62 @@ app.post('/api/create', async (req, res) => {
 });
 
 
-app.post('/api/logout', (req, res) => {
+app.post('/api/edit', async (req, res) => {
+  
+  if (req.session && req.session.user) {
+    const { blogId, title, description, content } = req.body;
+
+    try {
+      // Validate required fields
+      if (!title || !content) {
+        return res.status(400).json({ message: 'Title and content are required.' });
+      }
+      await db.query(
+        "UPDATE BLOGS SET title = $1, description = $2, content = $3, updated_at = NOW() WHERE id = $4",
+        [title, description || null, content, blogId]
+      );
+      
+      res.status(201).json({ 
+        message: 'Blog post updated successfully!',
+      });
+      
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error updating blog post' });
+    }
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
+  }
+});
+
+
+app.get('/api/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
       return res.status(500).json({ message: 'Logout failed' });
     }
     res.clearCookie('connect.sid'); // clear session cookie (default cookie name)
     res.json({ message: 'Logout successful' });
+    // console.log("Logout Successful");
   });
 });
 
+
+app.post('/api/delete', async (req, res) => {
+  const blog_id = req.body.postId;
+
+  try{
+    await db.query(
+      'DELETE FROM BLOGS WHERE id = $1', [blog_id]
+    );
+
+    res.status(201).json({message : "Blog deleted successfully"})
+  }
+  catch(err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 
 app.listen(port, () => {

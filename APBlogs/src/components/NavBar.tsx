@@ -76,7 +76,6 @@ export default function ButtonAppBar() {
 
   async function handleSignOut() {
   await fetch('http://localhost:3000/api/logout', {
-    method: 'POST',
     credentials: 'include', // important to send cookie
   });
   
@@ -147,7 +146,7 @@ export default function ButtonAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
                 <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
               </Menu>
             </div>
