@@ -42,12 +42,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage setUser={setUser}/>} />
         <Route path="/login" element={<LoginPage setUser={setUser} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/create" element={user ? <CreatePostPage setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
         <Route path="/edit" element={user ? <EditPostPage setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
-        <Route path="/profile" element={user ? <ProfilePage {...user} /> : <LoginPage  setUser={setUser} />} />
+        <Route path="/profile" element={user ? <ProfilePage {...user} setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
       </Routes>
     </Router>
   );

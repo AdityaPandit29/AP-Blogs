@@ -3,12 +3,14 @@ import NavBar from '../NavBar.tsx';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useUser } from '../UserContext.tsx'
 
 interface EditPostPageProps {
   setUser: (user: any) => void;
 }
 
 export default function EditPostPage({setUser} : EditPostPageProps) {
+  // const { setUser } = useUser();
   const { state } = useLocation();
   const navigate = useNavigate();
   const post = state?.post;
@@ -82,7 +84,7 @@ export default function EditPostPage({setUser} : EditPostPageProps) {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Box
         sx={{
           height: '100vh',

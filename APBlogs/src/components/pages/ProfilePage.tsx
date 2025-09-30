@@ -17,13 +17,14 @@ interface ProfilePageProps {
   nickname: string;
   avatarUrl?: string;
   posts: Post[];
+  setUser: (user: any) => void;
 }
 
-export default function ProfilePage({ username, nickname, avatarUrl, posts }: ProfilePageProps) {
+export default function ProfilePage({ username, nickname, avatarUrl, posts, setUser }: ProfilePageProps) {
   
   return (
     <div>
-    <NavBar />
+    <NavBar setUser={setUser}/>
     <NewPostButton />
     <Box sx={{
       minHeight: '100vh',
@@ -62,7 +63,7 @@ export default function ProfilePage({ username, nickname, avatarUrl, posts }: Pr
         ) : (
           <Stack spacing={3}>
             {posts.map(post => (
-              <MyPost post={post}/>
+              <MyPost post={post} setUser={setUser}/>
             ))}
           </Stack>
         )}

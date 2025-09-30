@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import NavBar from '../NavBar.tsx';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+// import { useUser } from '../UserContext.tsx'
 
 interface CreatePostPageProps {
   setUser: (user: any) => void;
 }
 
-export default function CreatePostPage({ setUser } : CreatePostPageProps) {
+export default function CreatePostPage({setUser} : CreatePostPageProps) {
+  // const { setUser } = useUser();
+
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: '',
@@ -70,7 +73,7 @@ export default function CreatePostPage({ setUser } : CreatePostPageProps) {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Box
         sx={{
           height: '100vh',

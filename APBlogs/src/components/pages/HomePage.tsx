@@ -4,12 +4,15 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import NavBar from '../NavBar.tsx'
 
+interface HomePageProps {
+  setUser: (user: any) => void;
+}
 
-export default function HomePage() {
+export default function HomePage({setUser} : HomePageProps) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       {/* Navbar */}
-      <NavBar />
+      <NavBar setUser={setUser}/>
         
       {/* Main Content */}
       <Box

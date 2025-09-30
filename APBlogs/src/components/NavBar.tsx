@@ -15,6 +15,8 @@ import Button from '@mui/material/Button';
 // import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+// import { useUser } from './UserContext.tsx';
+
 // const Search = styled('div')(({ theme }) => ({
 //   position: 'relative',
 //   borderRadius: theme.shape.borderRadius,
@@ -57,7 +59,12 @@ import { useNavigate } from 'react-router-dom';
 //   },
 // }));
 
-export default function ButtonAppBar() {
+interface ButtonAppBarProps {
+  setUser: (user: any) => void;
+}
+
+export default function ButtonAppBar({setUser} : ButtonAppBarProps) {
+  // const { setUser } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -80,7 +87,7 @@ export default function ButtonAppBar() {
   });
   
   // Reset user state or reload app, then redirect to login or home page
-  // setUser(null);
+  setUser(null);
   navigate('/');
   };
   return (

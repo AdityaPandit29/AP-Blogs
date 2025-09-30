@@ -4,12 +4,14 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography} from '@mui/material';
+// import { useUser } from '../UserContext.tsx';
 
 interface LoginPageProps {
   setUser: (user: any) => void;
 }
 
-export default function LoginForm({ setUser } : LoginPageProps) {
+export default function LoginForm({setUser} : LoginPageProps) {
+  // const { user, setUser } = useUser();
   const navigate = useNavigate();
   const [form, setForm] = useState({username : '', password : ''});
   const [error, setError] = useState('');

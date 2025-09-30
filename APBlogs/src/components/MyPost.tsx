@@ -27,7 +27,8 @@ interface Post {
 }
 
 interface MyPostProps {
-  post: Post; 
+  post: Post;
+  setUser: (user: any) => void;
 }
 
 // Styled component for expand button with rotate animation
@@ -41,7 +42,7 @@ const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => {
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
 }));
 
-export default function MyPost({post} : MyPostProps) {
+export default function MyPost({post, setUser} : MyPostProps) {
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -76,7 +77,7 @@ export default function MyPost({post} : MyPostProps) {
         const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
-          // setUser(data);
+          setUser(data);
         }
       } catch (err) {
         console.error('Error fetching profile', err);
