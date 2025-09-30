@@ -17,9 +17,12 @@ db.connect()
   .then(() => console.log("Connected to Render Postgres"))
   .catch(err => console.error("DB connection error:", err));
 
+const allowedOrigins = [
+  "http://localhost:5173",          // local dev
+  "https://ap-blogs-react-postgresql-frontend.onrender.com" // deployed frontend
+];
 
-
-app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to control how web applications running on one origin (domain, protocol, or port) can access resources from a different origin.
+app.use(cors({ origin: allowedOrigins, credentials: true })); // CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to control how web applications running on one origin (domain, protocol, or port) can access resources from a different origin.
 app.use(express.json()); // parse the json body into object
 app.use(express.urlencoded({ extended: true }));
 app.use(session({

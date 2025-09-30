@@ -14,11 +14,11 @@ export default function RegisterForm() {
   const [form, setForm] = useState({ username: '', nickname: '', password: '', confirmPassword: '' });
   const [error, setError] = useState('');
 
-  function handleChange(e) {
+  function handleChange(e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e : React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
     if (form.password.length < 8) {

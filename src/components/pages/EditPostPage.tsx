@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import NavBar from '../NavBar.tsx';
+// import NavBar from '../NavBar.tsx';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useUser } from '../UserContext.tsx'
+// import { useUser } from '../UserContext.tsx'
 
 interface EditPostPageProps {
   setUser: (user: any) => void;

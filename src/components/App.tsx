@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProfilePage from './pages/ProfilePage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
@@ -6,7 +6,7 @@ import RegisterPage from './pages/RegisterPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import CreatePostPage from './pages/CreatePostPage.tsx' 
 import EditPostPage from './pages/EditPostPage.tsx';
-import { UserProvider, useUser } from './UserContext.tsx';
+// import { UserProvider, useUser } from './UserContext.tsx';
 
 function App() {
   interface Post {
