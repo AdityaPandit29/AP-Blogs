@@ -6,16 +6,16 @@ import session from 'express-session';
 const app = express();
 const port = process.env.PORT || 3000;
 
-// const db = new pg.Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: { rejectUnauthorized: false } // Render requires SSL
-// });
+const db = new pg.Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false } // Render requires SSL
+});
 
-const db = new pg.Client({ user: "postgres", host: "localhost", database: "apblogs", password: "adipan123", port: 5432, });
+// const db = new pg.Client({ user: "postgres", host: "localhost", database: "apblogs", password: "adipan123", port: 5432, });
 
 db.connect();
-  // .then(() => console.log("Connected to Render Postgres"))
-  // .catch(err => console.error("DB connection error:", err));
+  .then(() => console.log("Connected to Render Postgres"))
+  .catch(err => console.error("DB connection error:", err));
 
 
 
