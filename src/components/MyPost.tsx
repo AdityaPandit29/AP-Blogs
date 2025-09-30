@@ -84,6 +84,7 @@ export default function MyPost({post, setUser} : MyPostProps) {
       }
     } catch (err) {
       setError('Unexpected error occurred.');
+      console.log(error);
     }
   }
 
