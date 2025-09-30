@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
+        const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           setUser(data);  // e.g. { username, nickname, avatarUrl, posts }

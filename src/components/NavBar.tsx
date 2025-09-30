@@ -82,7 +82,7 @@ export default function ButtonAppBar({setUser} : ButtonAppBarProps) {
   };
 
   async function handleSignOut() {
-  await fetch('http://localhost:3000/api/logout', {
+  await fetch('https://ap-blogs-react-postgresql.onrender.com/api/logout', {
     credentials: 'include', // important to send cookie
   });
   

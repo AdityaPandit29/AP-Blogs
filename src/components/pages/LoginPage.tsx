@@ -26,7 +26,7 @@ export default function LoginForm({setUser} : LoginPageProps) {
     // setSuccess(false);
     
     try {
-      const res = await fetch('http://localhost:3000/api/login', {
+      const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -44,7 +44,7 @@ export default function LoginForm({setUser} : LoginPageProps) {
       }
       else {
         // After successful login, fetch profile to get user data
-        const profileRes = await fetch('http://localhost:3000/api/profile', {
+        const profileRes = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', {
           credentials: 'include'
         });
 

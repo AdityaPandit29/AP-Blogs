@@ -57,7 +57,7 @@ export default function MyPost({post, setUser} : MyPostProps) {
 
     setError('');
     try {
-      const res = await fetch('http://localhost:3000/api/delete', {
+      const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/delete', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -74,7 +74,7 @@ export default function MyPost({post, setUser} : MyPostProps) {
       }
 
       try {
-        const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
+        const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           setUser(data);

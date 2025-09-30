@@ -46,7 +46,7 @@ export default function EditPostPage({setUser} : EditPostPageProps) {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/edit', {
+      const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -66,7 +66,7 @@ export default function EditPostPage({setUser} : EditPostPageProps) {
       }
 
       try {
-        const res = await fetch('http://localhost:3000/api/profile', { credentials: 'include' });
+        const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           setUser(data);
