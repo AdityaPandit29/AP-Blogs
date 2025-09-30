@@ -7,8 +7,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const db = new pg.Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // Render requires SSL
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 // const db = new pg.Client({ user: "postgres", host: "localhost", database: "apblogs", password: "adipan123", port: 5432, });
@@ -22,14 +22,46 @@ const allowedOrigins = [
   "https://ap-blogs-react-postgresql-frontend.onrender.com" // deployed frontend
 ];
 
-app.use(cors({ origin: allowedOrigins, credentials: true })); // CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to control how web applications running on one origin (domain, protocol, or port) can access resources from a different origin.
+// app.use(cors({ origin: allowedOrigins, credentials: true })); // CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to control how web applications running on one origin (domain, protocol, or port) can access resources from a different origin.
+
+// Update CORS configuration:
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' 
+        ? process.env.FRONTEND_URL 
+        : 'http://localhost:5173',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
+
+// Add trust proxy for production:
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+}
+
+
 app.use(express.json()); // parse the json body into object
 app.use(express.urlencoded({ extended: true }));
+// app.use(session({
+//   secret: 'your-secret-key',  // used to sign(encrypt) session cookie
+//   resave: false,              // avoid resaving session if unmodified
+//   saveUninitialized: false,   // don't save empty sessions
+//   cookie: { secure: true, sameSite: "none" }   // true if using HTTPS and false if using HTTP
+// }));
+
+// Update session configuration:
 app.use(session({
-  secret: 'your-secret-key',  // used to sign(encrypt) session cookie
-  resave: false,              // avoid resaving session if unmodified
-  saveUninitialized: false,   // don't save empty sessions
-  cookie: { secure: false }   // true if using HTTPS and false if using HTTP
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    proxy: process.env.NODE_ENV === 'production',
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    }
 }));
 
 app.post("/api/register", async (req, res) => {
