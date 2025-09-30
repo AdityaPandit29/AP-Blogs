@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { Link } from "react-router-dom";
 
 export default function BasicButtons() {
   const theme = useTheme();
@@ -53,7 +54,7 @@ export default function BasicButtons() {
             zIndex: 1300,
           }}
         >
-          <Button variant="contained" sx={{ borderRadius: '20px' }} href='/create'>
+          <Button variant="contained" sx={{ borderRadius: '20px' }} component={Link} to="/create">
             <AddIcon /> New Blog
           </Button>
         </Stack>

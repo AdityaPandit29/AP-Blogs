@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Link } from "react-router-dom";
 // import { useUser } from '../UserContext.tsx'
 
 interface EditPostPageProps {
@@ -165,7 +166,8 @@ export default function EditPostPage({setUser} : EditPostPageProps) {
           <Button
               variant="outlined"
               color="secondary"
-              href='/profile'
+              component={Link}
+              to='/profile'
               sx={{ py: 1.5, fontWeight: 'bold', fontSize: '1.1rem', borderRadius: 3 }}
             >
               Cancel

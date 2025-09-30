@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 // import NavBar from '../NavBar.tsx';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 // import { useUser } from '../UserContext.tsx'
 
 interface CreatePostPageProps {
@@ -160,7 +161,7 @@ export default function CreatePostPage({setUser} : CreatePostPageProps) {
           <Button
               variant="outlined"
               color="secondary"
-              href='/profile'
+              component={Link} to="/profile"
               sx={{ py: 1.5, fontWeight: 'bold', fontSize: '1.1rem', borderRadius: 3 }}
             >
               Cancel
