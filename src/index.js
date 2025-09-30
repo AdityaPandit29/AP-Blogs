@@ -4,16 +4,18 @@ import cors from 'cors';
 import session from 'express-session';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "apblogs",
-  password: "adipan123",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false } // Render requires SSL
 });
-db.connect();
+
+db.connect()
+  .then(() => console.log("Connected to Render Postgres"))
+  .catch(err => console.error("DB connection error:", err));
+
+
 
 app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers to control how web applications running on one origin (domain, protocol, or port) can access resources from a different origin.
 app.use(express.json()); // parse the json body into object
