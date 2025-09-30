@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
 // import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // import { useUser } from './UserContext.tsx';
 
@@ -161,7 +162,7 @@ export default function ButtonAppBar({setUser} : ButtonAppBarProps) {
           (<Button
             color="inherit"
             sx={{ ml: 2, borderRadius: 2, textTransform: 'none', fontWeight: 'medium' }}
-            href="/login"
+            component={Link} to="/login"
           >
             Sign In
           </Button>)}

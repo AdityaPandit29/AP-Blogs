@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import Links from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography} from '@mui/material';
+import { Link } from "react-router-dom";
 // import { useUser } from '../UserContext.tsx';
 
 interface LoginPageProps {
@@ -132,9 +133,9 @@ export default function LoginForm({setUser} : LoginPageProps) {
 
         <Typography sx={{ mt: 2 }}>
           Don't have an account?{' '}
-          <Link href="/register" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
+          <Links component={Link} to="/login" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
             Register
-          </Link>
+          </Links>
         </Typography>
       </Paper>
     </Box>

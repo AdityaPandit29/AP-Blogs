@@ -4,9 +4,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
+import Links from '@mui/material/Link';
 import Alert from "@mui/material/Alert";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Link } from "react-router-dom";
 
 
 export default function RegisterForm() {
@@ -146,9 +147,9 @@ export default function RegisterForm() {
 
         <Typography sx={{ mt: 2 }}>
           Already have an account?{' '}
-          <Link href="/login" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
+          <Links component={Link} to="/login" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
             Login
-          </Link>
+          </Links>
         </Typography>
       </Paper>
     </Box>
@@ -187,9 +188,9 @@ export default function RegisterForm() {
 
         <Typography sx={{ mt: 2 }}>
           You can now{' '}
-          <Link href="/login" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
+          <Links component={Link} to="/login" underline="hover" sx={{ cursor: 'pointer', fontWeight: 'medium' }}>
             Login
-          </Link>
+          </Links>
           {' '}with your new account.
         </Typography>
       </Paper>
