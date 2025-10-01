@@ -37,7 +37,7 @@ export default function BasicButtons() {
               justifyContent: 'center',
             }}
             aria-label="Add"
-            href='/create'
+            component={Link} to="/create"
           >
             <AddIcon />
           </Button>
