@@ -146,6 +146,55 @@ app.get('/api/profile', authenticateToken, async (req, res) => {
 });
 
 
+app.get('/api/users/search', authenticateToken, async (req, res) => {
+  try {
+    const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+    if (!q) {
+      return res.json([]);
+    }
+
+    const result = await db.query(
+      `SELECT username, nickname FROM USERS
+       WHERE username ILIKE $1 OR nickname ILIKE $1
+       ORDER BY username
+       LIMIT 20`,
+      [`%${q}%`]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+app.get('/api/users/:username', authenticateToken, async (req, res) => {
+  try {
+    const { username } = req.params;
+    const userResult = await db.query(
+      "SELECT username, nickname, user_id FROM USERS WHERE username = $1",
+      [username]
+    );
+
+    if (userResult.rowCount === 0) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    const { username: foundUsername, nickname, user_id } = userResult.rows[0];
+    const posts = (await db.query(
+      "SELECT * FROM BLOGS WHERE user_id = $1 ORDER BY updated_at DESC",
+      [user_id]
+    )).rows;
+
+    res.json({ username: foundUsername, nickname, posts });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 app.post('/api/create', authenticateToken, async (req, res) => {
   const { title, description, content } = req.body;
   const user_id = req.user.user_id;

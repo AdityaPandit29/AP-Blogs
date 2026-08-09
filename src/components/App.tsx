@@ -6,6 +6,8 @@ import RegisterPage from './pages/RegisterPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import CreatePostPage from './pages/CreatePostPage.tsx' 
 import EditPostPage from './pages/EditPostPage.tsx';
+import SearchPage from './pages/SearchPage.tsx';
+import UserProfilePage from './pages/UserProfilePage.tsx';
 import { apiFetch, clearToken, getToken } from '../api.ts';
 // import { UserProvider, useUser } from './UserContext.tsx';
 
@@ -53,6 +55,8 @@ function App() {
         <Route path="/create" element={user ? <CreatePostPage setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
         <Route path="/edit" element={user ? <EditPostPage setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
         <Route path="/profile" element={user ? <ProfilePage {...user} setUser={setUser} /> : <LoginPage  setUser={setUser} />} />
+        <Route path="/search" element={user ? <SearchPage setUser={setUser} /> : <LoginPage setUser={setUser} />} />
+        <Route path="/users/:username" element={user ? <UserProfilePage setUser={setUser} currentUsername={user.username} /> : <LoginPage setUser={setUser} />} />
       </Routes>
     </Router>
   );
