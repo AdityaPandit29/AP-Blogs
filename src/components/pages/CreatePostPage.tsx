@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { apiFetch } from '../../api.ts';
 // import { useUser } from '../UserContext.tsx'
 
 interface CreatePostPageProps {
@@ -36,10 +37,8 @@ export default function CreatePostPage({setUser} : CreatePostPageProps) {
     }
 
     try {
-      const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/create', {
+      const res = await apiFetch('/api/create', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({
           title: form.title,
           description: form.description,
@@ -55,10 +54,10 @@ export default function CreatePostPage({setUser} : CreatePostPageProps) {
       }
 
       try {
-        const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', { credentials: 'include' });
+        const res = await apiFetch('/api/profile');
         if (res.ok) {
           const data = await res.json();
-          setUser(data);  // e.g. { username, nickname, avatarUrl, posts }
+          setUser(data);
         }
       } catch (err) {
         console.error('Error fetching profile', err);

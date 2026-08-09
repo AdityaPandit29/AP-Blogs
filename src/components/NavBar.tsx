@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 // import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { apiFetch, clearToken } from '../api.ts';
 
 // import { useUser } from './UserContext.tsx';
 
@@ -83,11 +84,8 @@ export default function ButtonAppBar({setUser} : ButtonAppBarProps) {
   };
 
   async function handleSignOut() {
-  await fetch('https://ap-blogs-react-postgresql.onrender.com/api/logout', {
-    credentials: 'include', // important to send cookie
-  });
-  
-  // Reset user state or reload app, then redirect to login or home page
+  clearToken();
+  await apiFetch('/api/logout');
   setUser(null);
   navigate('/');
   };

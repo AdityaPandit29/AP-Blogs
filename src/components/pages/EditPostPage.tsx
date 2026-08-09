@@ -4,6 +4,7 @@ import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from "react-router-dom";
+import { apiFetch } from '../../api.ts';
 // import { useUser } from '../UserContext.tsx'
 
 interface EditPostPageProps {
@@ -47,10 +48,8 @@ export default function EditPostPage({setUser} : EditPostPageProps) {
     }
 
     try {
-      const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/edit', {
+      const res = await apiFetch('/api/edit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({
           blogId: form.blogId,
           title: form.title,
@@ -67,7 +66,7 @@ export default function EditPostPage({setUser} : EditPostPageProps) {
       }
 
       try {
-        const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', { credentials: 'include' });
+        const res = await apiFetch('/api/profile');
         if (res.ok) {
           const data = await res.json();
           setUser(data);

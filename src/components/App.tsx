@@ -6,6 +6,7 @@ import RegisterPage from './pages/RegisterPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import CreatePostPage from './pages/CreatePostPage.tsx' 
 import EditPostPage from './pages/EditPostPage.tsx';
+import { apiFetch, clearToken, getToken } from '../api.ts';
 // import { UserProvider, useUser } from './UserContext.tsx';
 
 function App() {
@@ -26,11 +27,15 @@ function App() {
 
   useEffect(() => {
     async function fetchProfile() {
+      if (!getToken()) return;
+
       try {
-        const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', { credentials: 'include' });
+        const res = await apiFetch('/api/profile');
         if (res.ok) {
           const data = await res.json();
           setUser(data);  // e.g. { username, nickname, avatarUrl, posts }
+        } else {
+          clearToken();
         }
       } catch (err) {
         console.error('Error fetching profile', err);

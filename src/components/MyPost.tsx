@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiFetch } from '../api.ts';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -57,10 +58,8 @@ export default function MyPost({post, setUser} : MyPostProps) {
 
     setError('');
     try {
-      const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/delete', {
+      const res = await apiFetch('/api/delete', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
           body: JSON.stringify({
             postId: post.id,
           }),
@@ -74,7 +73,7 @@ export default function MyPost({post, setUser} : MyPostProps) {
       }
 
       try {
-        const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', { credentials: 'include' });
+        const res = await apiFetch('/api/profile');
         if (res.ok) {
           const data = await res.json();
           setUser(data);

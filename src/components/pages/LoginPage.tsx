@@ -5,6 +5,7 @@ import Links from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography} from '@mui/material';
 import { Link } from "react-router-dom";
+import { apiFetch, setToken } from '../../api.ts';
 // import { useUser } from '../UserContext.tsx';
 
 interface LoginPageProps {
@@ -24,34 +25,28 @@ export default function LoginForm({setUser} : LoginPageProps) {
   async function handleSubmit(e : React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
-    // setSuccess(false);
     
     try {
-      const res = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/login', {
+      const res = await apiFetch('/api/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({
           username: form.username,
           pass: form.password,
         }),
       });
 
-      const data = await res.json(); // converts the response sent to a JS object
-      console.log(res);
-      console.log(data);
+      const data = await res.json();
       if(!res.ok) {
         setError(data.message);
       }
       else {
-        // After successful login, fetch profile to get user data
-        const profileRes = await fetch('https://ap-blogs-react-postgresql.onrender.com/api/profile', {
-          credentials: 'include'
-        });
+        setToken(data.token);
+
+        const profileRes = await apiFetch('/api/profile');
 
         if (profileRes.ok) {
           const userData = await profileRes.json();
-          setUser(userData); // Set user in App state
+          setUser(userData);
           navigate('/profile');
         } else {
           setError('Failed to load profile');
