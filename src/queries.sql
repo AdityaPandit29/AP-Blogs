@@ -1,4 +1,4 @@
-CREATE TABLE users
+CREATE TABLE IF NOT EXISTS users
 (
     user_id int PRIMARY KEY,
     username varchar(50) UNIQUE NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE users
     nickname varchar(50) NOT NULL
 );
 
-CREATE TABLE blogs
+CREATE TABLE IF NOT EXISTS blogs
 (
     id SERIAL PRIMARY KEY,
     user_id int REFERENCES users (user_id),
