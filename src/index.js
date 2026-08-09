@@ -13,34 +13,8 @@ const db = new pg.Client({
 
 // const db = new pg.Client({ user: "postgres", host: "localhost", database: "apblogs", password: "adipan123", port: 5432, });
 
-async function ensureTables() {
-  await db.query(`
-    CREATE TABLE IF NOT EXISTS users (
-      user_id int PRIMARY KEY,
-      username varchar(50) UNIQUE NOT NULL,
-      pass varchar(255) NOT NULL,
-      nickname varchar(50) NOT NULL
-    )
-  `);
-  await db.query(`
-    CREATE TABLE IF NOT EXISTS blogs (
-      id SERIAL PRIMARY KEY,
-      user_id int REFERENCES users (user_id),
-      title varchar(100) NOT NULL,
-      description text,
-      content text,
-      created_at timestamp DEFAULT CURRENT_TIMESTAMP,
-      updated_at timestamp DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
-  console.log("Database tables ready");
-}
-
 db.connect()
-  .then(() => {
-    console.log("Connected to Render Postgres");
-    return ensureTables();
-  })
+  .then(() => console.log("Connected to Render Postgres"))
   .catch(err => console.error("DB connection error:", err));
 
 const allowedOrigins = [
